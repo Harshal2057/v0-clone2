@@ -1,14 +1,36 @@
-import Navbar from "../../modules/home/components/navbar";
-import { Button } from "../../components/ui/button";
-import { UserButton } from "@clerk/nextjs";
+import ProjectForm from "../../modules/home/components/project-form";
 import Image from "next/image";
+import React from "react";
 
-export default function Home() {
+const Page = () => {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <Navbar />
-      <Button>Test</Button>
-      <UserButton />
+    <div className="flex justify-center items-center w-full px-4 py-8">
+      <div className="max-w-5xl w-full">
+        <section className="space-y-8 flex flex-col items-center">
+          <div className="flex flex-col items-center">
+            <Image
+              src="/logo.svg"
+              alt="logo"
+              width={100}
+              height={100}
+              className="hidden md:block invert dark:invert-0"
+            />
+          </div>
+          <h1 className="text-2xl md:text-5xl font-bold text-center">
+            Build Something with 💓
+          </h1>
+
+          <p className="text-lg md:text-xl text-muted-foreground text-center">
+            Create apps and websites by chatting with AI
+          </p>
+
+          <div className="max-w-3xl w-full">
+              <ProjectForm />
+          </div>
+        </section>
+      </div>
     </div>
   );
-}
+};
+
+export default Page;
