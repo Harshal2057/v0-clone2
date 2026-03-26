@@ -17,6 +17,7 @@ import {
   InputGroupAddon,
   InputGroupText,
 } from "../../../components/ui/input-group";
+import { onInvoke } from "../actions/index";
 
 const formSchema = z.object({
   content: z
@@ -97,6 +98,16 @@ const ProjectForm = () => {
     } catch (error) {}
   };
 
+  const onInvokeAi = async() => {
+    try {
+      const res = await onInvoke()
+      console.log(res)
+      toast.success("Done")
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className="space-y-8">
       {/* Template Grid */}
@@ -132,57 +143,59 @@ const ProjectForm = () => {
         </div>
       </div>
 
- <form
-      onSubmit={form.handleSubmit(onSubmit)}
-      className={cn(
-        "relative border rounded-xl bg-sidebar transition-all p-3",
-        isFocused && "ring-2 ring-primary/20 shadow-lg"
-      )}
-    >
-      <Controller
-        name="content"
-        control={form.control}
-        render={({ field }) => (
-          <div className="relative">
-            <TextAreaAutosize
-              {...field}
-              placeholder="Describe what you want to create..."
-              minRows={5}
-              maxRows={8}
-              className="w-full resize-none bg-transparent outline-none border-none text-sm leading-relaxed"
-              onFocus={() => setIsFocused(true)}
-              onBlur={(e) => {
-                field.onBlur();
-                setIsFocused(false);
-              }}
-              onChange={(e) => field.onChange(e)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
-                  e.preventDefault();
-                  form.handleSubmit(onSubmit)();
-                }
-              }}
-            />
+    <Button onClick={onInvokeAi}>Invoke the Ai</Button>
 
-            {/* CHARACTER COUNT */}
-            <div className="absolute bottom-1 left-1 text-xs text-muted-foreground">
-              {field.value.length} chars
-            </div>
-
-            {/* SUBMIT BUTTON */}
-            <div className="absolute bottom-1 right-1">
-              <Button
-                type="submit"
-                size="icon"
-                className="h-8 w-8 rounded-full"
-              >
-                <ArrowUpIcon className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={cn(
+          "relative border rounded-xl bg-sidebar transition-all p-3",
+          isFocused && "ring-2 ring-primary/20 shadow-lg",
         )}
-      />
-    </form>
+      >
+        <Controller
+          name="content"
+          control={form.control}
+          render={({ field }) => (
+            <div className="relative">
+              <TextAreaAutosize
+                {...field}
+                placeholder="Describe what you want to create..."
+                minRows={5}
+                maxRows={8}
+                className="w-full resize-none bg-transparent outline-none border-none text-sm leading-relaxed"
+                onFocus={() => setIsFocused(true)}
+                onBlur={(e) => {
+                  field.onBlur();
+                  setIsFocused(false);
+                }}
+                onChange={(e) => field.onChange(e)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                    form.handleSubmit(onSubmit)();
+                  }
+                }}
+              />
+
+              {/* CHARACTER COUNT */}
+              <div className="absolute bottom-1 left-1 text-xs text-muted-foreground">
+                {field.value.length} chars
+              </div>
+
+              {/* SUBMIT BUTTON */}
+              <div className="absolute bottom-1 right-1">
+                <Button
+                  type="submit"
+                  size="icon"
+                  className="h-8 w-8 rounded-full"
+                >
+                  <ArrowUpIcon className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          )}
+        />
+      </form>
     </div>
   );
 };
