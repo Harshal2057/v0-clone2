@@ -3,16 +3,11 @@
 import ProjectForm from "../../modules/home/components/project-form";
 import Image from "next/image";
 import React from "react";
-import { Button } from "../../components/ui/button";
-import { inngest } from "../../inngest/client";
+
 
 const Page = () => {
 
-  const onInvoke = async() => {
-    await inngest.send({
-      name:"agent/hello"
-    })
-  }
+
 
   return (
     <div className="flex justify-center items-center w-full px-4 py-8">
